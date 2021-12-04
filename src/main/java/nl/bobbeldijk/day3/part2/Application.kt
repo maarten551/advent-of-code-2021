@@ -12,8 +12,8 @@ fun main() {
 
 class Application : Answerable<Int> {
     override fun calculateAnswer(input: MutableList<String>): Int {
-        val oxygen = findRating(input) { i -> abs(i - 1) }
-        val c02 = findRating(input) { i -> i }
+        val oxygen = findRating(input) { abs(it - 1) }
+        val c02 = findRating(input) { it }
 
         println("oxygen generator rating: $oxygen")
         println("CO2 scrubber rating: $c02")
@@ -34,7 +34,7 @@ class Application : Answerable<Int> {
                 }
 
                 val mostCommonBitAtIndex = lookupMostCommonBitOnColumn(copyOfOutput, i)
-                copyOfOutput.removeAll { line -> line[i] == removeIfBitIsPipe(mostCommonBitAtIndex).toString()[0] }
+                copyOfOutput.removeAll { it[i] == removeIfBitIsPipe(mostCommonBitAtIndex).toString()[0] }
             }
         }
 
@@ -42,7 +42,7 @@ class Application : Answerable<Int> {
     }
 
     private fun lookupMostCommonBitOnColumn(input: MutableList<String>, columnIndex: Int): Int {
-        return if (input.map { line -> line[columnIndex] }.count('0'::equals) > (input.size / 2)) 0 else 1
+        return if (input.map { it[columnIndex] }.count { it == '0' } > (input.size / 2)) 0 else 1
     }
 
 }

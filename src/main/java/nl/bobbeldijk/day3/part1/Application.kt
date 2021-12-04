@@ -29,7 +29,7 @@ class Application : Answerable<Int> {
     }
 
     private fun lookupMostCommonBitOnColumn(input: MutableList<String>, columnIndex: Int): Int {
-        return if (input.map { line -> line[columnIndex] }.count('0'::equals) > (input.size / 2)) 0 else 1
+        return if (input.map { it[columnIndex] }.count { '0' == it } > (input.size / 2)) 0 else 1
     }
 
 }
