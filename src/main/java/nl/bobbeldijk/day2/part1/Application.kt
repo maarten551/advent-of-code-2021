@@ -10,8 +10,8 @@ fun main() {
 
 class Application : Answerable<Int> {
     override fun calculateAnswer(input: MutableList<String>): Int {
-        var horizontal = 0;
-        var depth = 0;
+        var horizontal = 0
+        var depth = 0
 
         val commandMapper = mapOf<String, (Int) -> Unit>(
             "forward" to { i -> horizontal += i },
