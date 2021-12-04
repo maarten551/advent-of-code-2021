@@ -11,7 +11,7 @@ fun main() {
 
 class Application : nl.bobbeldijk.day4.part1.Application(), Answerable<Int> {
     override fun calculateAnswer(input: MutableList<String>): Int {
-        setup(input)
+        prepareInput(input)
 
         for (drawnNumber in drawnNumbers) {
             val boardsThatBingo = boards.filter { board -> board.drawNumber(drawnNumber) }

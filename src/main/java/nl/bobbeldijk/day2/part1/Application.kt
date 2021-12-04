@@ -14,9 +14,9 @@ class Application : Answerable<Int> {
         var depth = 0
 
         val commandMapper = mapOf<String, (Int) -> Unit>(
-            "forward" to { i -> horizontal += i },
-            "down" to { i -> depth += i },
-            "up" to { i -> depth -= i }
+            "forward" to { horizontal += it },
+            "down" to { depth += it },
+            "up" to { depth -= it }
         )
 
         input.forEach { inputLine ->
