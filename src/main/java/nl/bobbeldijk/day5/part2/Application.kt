@@ -11,21 +11,23 @@ fun main() {
 
 class Application : nl.bobbeldijk.day5.part1.Application(), Answerable<Int> {
     override fun calculateAnswer(input: MutableList<String>): Int {
-        val groupedCommands = parseCommands(input).groupBy { it.x1 == it.x2 || it.y1 == it.y2 }
-        groupedCommands[true]?.forEach(::applyHorizontalOrVerticalCommands)
-        groupedCommands[false]?.forEach(::applyDiagonalCommand)
+        parseCommands(input).forEach(::applyCommand)
 
         println("Answer: ${oceanMap.values.count { it >= 2 }}")
 
         return oceanMap.values.count { it >= 2 }
     }
 
-    private fun applyDiagonalCommand(command: ParsedCommand) {
-        val xProgression = createRange(command.x1, command.x2)
-        val yProgression = createRange(command.y1, command.y2)
+    override fun applyCommand(command: ParsedCommand) {
+        super.applyCommand(command)
 
-        xProgression.forEachIndexed { i, _ ->
-            addToMap(xProgression.elementAt(i), yProgression.elementAt(i))
+        if (command.x1 != command.x2 && command.y1 != command.y2) {
+            val xProgression = createRange(command.x1, command.x2)
+            val yProgression = createRange(command.y1, command.y2)
+
+            xProgression.forEachIndexed { i, _ ->
+                addToMap(xProgression.elementAt(i), yProgression.elementAt(i))
+            }
         }
     }
 }

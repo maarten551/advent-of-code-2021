@@ -18,7 +18,7 @@ open class Application : Answerable<Int> {
     override fun calculateAnswer(input: MutableList<String>): Int {
         parseCommands(input)
             .filter { it.x1 == it.x2 || it.y1 == it.y2 }
-            .forEach(::applyHorizontalOrVerticalCommands)
+            .forEach(::applyCommand)
 
         println("Answer: ${oceanMap.values.count { it >= 2 }}")
 
@@ -31,10 +31,10 @@ open class Application : Answerable<Int> {
             .map { ParsedCommand(it[1].toInt(), it[2].toInt(), it[3].toInt(), it[4].toInt()) }
     }
 
-    protected fun applyHorizontalOrVerticalCommands(command: ParsedCommand) {
-        if (command.x1 != command.x2) {
+    protected open fun applyCommand(command: ParsedCommand) {
+        if (command.y1 == command.y2) {
             createRange(command.x1, command.x2).forEach { x -> addToMap(x, command.y1) }
-        } else {
+        } else if (command.x1 == command.x2) {
             createRange(command.y1, command.y2).forEach { y -> addToMap(command.x1, y) }
         }
     }
