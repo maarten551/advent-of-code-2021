@@ -26,16 +26,8 @@ class Board(numbersInSpot: List<List<String>>) {
 
     private fun isBingo(): Boolean {
         return arrayOf(
-            {
-                IntStream.range(0, 5).anyMatch { row ->
-                    IntStream.range(0, 5).allMatch { column -> spots[(row * 5) + column].isChecked }
-                }
-            }, //horizontalCheck
-            {
-                IntStream.range(0, 5).anyMatch { row ->
-                    IntStream.range(0, 5).allMatch { column -> spots[(column * 5) + row].isChecked }
-                }
-            } //verticalCheck
+            { IntStream.range(0, 5).anyMatch { row -> IntStream.range(0, 5).allMatch { column -> spots[(row * 5) + column].isChecked } } }, //horizontalCheck
+            { IntStream.range(0, 5).anyMatch { row -> IntStream.range(0, 5).allMatch { column -> spots[(column * 5) + row].isChecked } } } //verticalCheck
         ).any { it() }
     }
 }
