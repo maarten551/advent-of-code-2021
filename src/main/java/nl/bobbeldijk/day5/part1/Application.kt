@@ -14,7 +14,6 @@ data class Position(val x: Int, val y: Int)
 open class Application : Answerable<Int> {
     val oceanMap: MutableMap<Position, Int> = mutableMapOf()
     val addToMap = { x: Int, y: Int -> oceanMap.compute(Position(x, y)) { _, i -> if (i == null) 1 else i + 1 } }
-    val parseInputRegex = Regex("(\\d+),(\\d+) -> (\\d+),(\\d+)")
 
     override fun calculateAnswer(input: MutableList<String>): Int {
         parseCommands(input)
@@ -27,17 +26,21 @@ open class Application : Answerable<Int> {
     }
 
     protected fun parseCommands(input: MutableList<String>): List<ParsedCommand> {
+        val parseInputRegex = Regex("(\\d+),(\\d+) -> (\\d+),(\\d+)")
         return input.map { parseInputRegex.find(it)!!.groupValues }
             .map { ParsedCommand(it[1].toInt(), it[2].toInt(), it[3].toInt(), it[4].toInt()) }
     }
 
     protected fun applyHorizontalOrVerticalCommands(command: ParsedCommand) {
-        addToMap(command.x1, command.y1) // first point always gets mapped
-        (command.x2 downTo command.x1 + 1).forEach { x -> addToMap(x, command.y1) }
-        (command.x2 until command.x1).forEach { x -> addToMap(x, command.y1) }
-        (command.y2 downTo command.y1 + 1).forEach { y -> addToMap(command.x1, y) }
-        (command.y2 until command.y1).forEach { y -> addToMap(command.x1, y) }
+        if (command.x1 != command.x2) {
+            createRange(command.x1, command.x2).forEach { x -> addToMap(x, command.y1) }
+        } else {
+            createRange(command.y1, command.y2).forEach { y -> addToMap(command.x1, y) }
+        }
     }
 
-
+    // A single default range creator can't handle dynamic low-to-high and high-to-low, so this function switches it automatically
+    protected fun createRange(i1: Int, i2: Int): IntProgression {
+        return if (i1 <= i2) (i1..i2) else (i1 downTo i2)
+    }
 }

@@ -21,16 +21,11 @@ class Application : nl.bobbeldijk.day5.part1.Application(), Answerable<Int> {
     }
 
     private fun applyDiagonalCommand(command: ParsedCommand) {
-        val xProgression = createUnorderedRanges(command.x1, command.x2)
-        val yProgression = createUnorderedRanges(command.y1, command.y2)
+        val xProgression = createRange(command.x1, command.x2)
+        val yProgression = createRange(command.y1, command.y2)
 
         xProgression.forEachIndexed { i, _ ->
             addToMap(xProgression.elementAt(i), yProgression.elementAt(i))
         }
     }
-
-    private fun createUnorderedRanges(i1: Int, i2: Int): IntProgression {
-        return if (i1 <= i2) (i1..i2) else (i1 downTo i2)
-    }
-
 }
