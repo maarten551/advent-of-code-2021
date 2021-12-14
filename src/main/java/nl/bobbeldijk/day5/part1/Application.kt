@@ -39,8 +39,10 @@ open class Application : Answerable<Int> {
         }
     }
 
-    // A single default range creator can't handle dynamic low-to-high and high-to-low, so this function switches it automatically
-    protected fun createRange(i1: Int, i2: Int): IntProgression {
-        return if (i1 <= i2) (i1..i2) else (i1 downTo i2)
+    companion object Util {
+        // A single default range creator can't handle dynamic low-to-high and high-to-low, so this function switches it automatically
+        fun createRange(i1: Int, i2: Int): IntProgression {
+            return if (i1 <= i2) (i1..i2) else (i1 downTo i2)
+        }
     }
 }
