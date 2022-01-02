@@ -24,6 +24,6 @@ class ApplicationTest {
         var testInput = InputReader.readStreamFromInputFile(InputFile.DAY8, true, "test")
                 .collect(Collectors.toList());
 
-        assertEquals(5353, application.calculateAnswer(testInput));
+        assertEquals(61229, application.calculateAnswer(testInput));
     }
 }
